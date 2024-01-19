@@ -1,4 +1,4 @@
-from flask import Flask,jsonify, request
+from flask import jsonify, request
 
 from data import product_records
 
@@ -20,9 +20,9 @@ def get_active_products():
             active_products.append(product)
 
     if active_products:
-        return jsonify({'message': 'Here are the listed active products', 'active_products': active_products})
+        return jsonify({'message': 'here are the listed active products', 'active_products': active_products})
     else:
-        return jsonify({'message': 'No active products found'})
+        return jsonify({'message': 'no active products found'})
         
 
 
@@ -34,6 +34,7 @@ def add_product():
     product['name'] = data['name']
     product['description'] = data['description']
     product['price'] = data['price']
+    product['active'] = data['active']
 
     product_records.append(product)
 
@@ -47,12 +48,12 @@ def edit_product(product_id):
     for record in product_records:
         if record['product_id'] == int(product_id):
             product = record
-        product['name'] = data.get('name', product['name'])   
-        product['description'] = data.get('description', product['description'])
-        product['price'] = data.get('price', product['price'])
-        product['active'] = data.get('active', product['active'])
+            product['name'] = data.get('name', product['name'])   
+            product['description'] = data.get('description', product['description'])
+            product['price'] = data.get('price', product['price'])
+            product['active'] = data.get('active', product['active'])
 
-    return jsonify({'message': 'Product updated', 'results': product}), 200      
+            return jsonify({'message': 'product updated', 'results': product}), 200      
 
 def delete_product(product_id):
     for product in product_records:
